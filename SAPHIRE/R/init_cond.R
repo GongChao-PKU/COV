@@ -20,7 +20,7 @@ generate_init_condi <- function(r0,
   R0 <- 0
   H0 <- 27
   library(readr)
-  realData_all <- read.csv("https://raw.githubusercontent.com/GongChao-PKU/super-octo-invention/master/COVID/SAPHIRE/R/init_cond.R") 
+  realData_all <- read.csv("https://raw.githubusercontent.com/GongChao-PKU/COV/master/SAPHIRE/data/Covid19CasesWH.csv",row.names = 1) 
   realData <- realData_all[-c(1:24), ] # the 25th row correspond to 1 Jan
   jan1_idx = 25
   

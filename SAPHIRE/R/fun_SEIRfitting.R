@@ -206,5 +206,5 @@ SEIRfitting=function(init_sets_list,
   # par(mfrow = c(1, 1))
   # corrplot(cor(mcmc_pars_estimate))
   # pairs(mcmc_pars_estimate)
-  
+  return(pars_est_run_[[run_id]])
 }

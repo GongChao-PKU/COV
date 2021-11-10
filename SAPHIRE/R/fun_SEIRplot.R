@@ -16,7 +16,7 @@
 #' @param r                       ascertainment rate 
 #' @param num_periods             number of periods to simulate
 #################################################################################################
-SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4,condition=1) {
+SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4,section=1) {
   init_settings$days_to_fit <- 1:68
   library(vioplot)
   ##

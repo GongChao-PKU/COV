@@ -16,7 +16,7 @@
 #' @param r                       ascertainment rate 
 #' @param num_periods             number of periods to simulate
 #################################################################################################
-SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) {
+SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4,condition=1) {
   init_settings$days_to_fit <- 1:68
   library(vioplot)
   ##
@@ -24,10 +24,11 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   ptime <- 1:length(onset_obs_all)
   mydate <- c(paste("Jan", 1:31), paste("Feb", 1:29), paste("Mar", 1:8))
   #
-  pdf(paste0("../output/Figure_", file_name, ".pdf"), width = 9, height = 10)
-  par(mar = c(4, 5, 2.5, 1))
-  layout(matrix(c(1:6), byrow = T, nrow = 3))
-  
+  #pdf(paste0("../output/Figure_", file_name, ".pdf"), width = 9, height = 10)
+  #par(mar = c(4, 5, 2.5, 1))
+  #layout(matrix(c(1:6), byrow = T, nrow = 3))
+  if(condition==1){
+    par()
   ##########################################   Panel A  ##########################################################
   estN_mat <- apply(pars_estimate, 1, function(x) SEIRsimu(pars = x, init_settings = init_settings, num_periods = 5)[, "Onset_expect"])
   estN_mean <- round(apply(estN_mat, 1, mean), 0)
@@ -51,7 +52,9 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   #
   legend("topleft", legend = c("Observed", "Fitted",  "Predicted"), col = c("black",  "#BC3C29FF", "#0072B5FF"), pch = c(4, 16, 17), bty = "n")
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "A", xpd = T, cex = 2)
-  
+  }
+  if(condition==2){
+    par()
   ##########################################   Panel B  ##########################################################
   estRt_mat <- apply(pars_estimate, 1, function(x) estimate_R(pars = x, init_settings = init_settings))
   estRt_mat <- t(estRt_mat)
@@ -77,7 +80,9 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   text(5, max(estRt_mat[, 5]) + 0.4, labels = rt_mean[5])
   text(5, max(estRt_mat[, 5]) + 0.15, labels = paste("(", rt_low[5], "-", rt_up[5], ")", sep = ""))
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "B", xpd = T, cex = 2)
-  
+  }
+   if(condition==3){
+     par()
   ##########################################   Panel C  ##########################################################
   estN_mat <- apply(pars_estimate, 1, function(x) SEIRsimu(pars = x, init_settings = init_settings, num_periods = 4)[, "Onset_expect"])
   estN_mean <- round(apply(estN_mat, 1, mean), 0)
@@ -101,7 +106,9 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   #
   legend("topleft", legend = c("Observed", "Fitted",  "Predicted"), col = c("black",  "#BC3C29FF", "#0072B5FF"), pch = c(4, 16, 17), bty = "n")
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "C", xpd = T, cex = 2)
- 
+  }
+  if(condition==4){
+    par()
   ##########################################   Panel D  ##########################################################
   estN_mat <- apply(pars_estimate, 1, function(x) SEIRsimu(pars = x, init_settings = init_settings, num_periods = 3)[, "Onset_expect"])
   estN_mean <- round(apply(estN_mat, 1, mean), 0)
@@ -125,7 +132,9 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   #
   legend("topleft", legend = c("Observed", "Fitted",  "Predicted"), col = c("black",  "#BC3C29FF", "#0072B5FF"), pch = c(4, 16, 17), bty = "n")
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "D", xpd = T, cex = 2)
-  
+  }
+  if(condition==5){
+    par()                        
   ##########################################   Panel E  ##########################################################
   estN_mat <- apply(pars_estimate, 1, function(x) SEIRsimu(pars = x, init_settings = init_settings, num_periods = 2)[, "Onset_expect"])
   estN_mean <- round(apply(estN_mat, 1, mean), 0)
@@ -149,7 +158,9 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   #
   legend("topleft", legend = c("Observed", "Fitted",  "Predicted"), col = c("black",  "#BC3C29FF", "#0072B5FF"), pch = c(4, 16, 17), bty = "n")
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "E", xpd = T, cex = 2)
-  
+  }
+  if(condition==6){
+    par()                        
   ##########################################   Panel F  ##########################################################
   estAIP_mat <- apply(pars_estimate, 1, function(x) SEIRsimu(pars = x, init_settings = init_settings, num_periods = 5)[, c("I", "A", "P")])
   estI_mat <- estAIP_mat[ptime, ]
@@ -166,5 +177,6 @@ SEIRplot <- function(pars_estimate, file_name, init_settings, panel_B_R_ylim=4) 
   legend("topleft", legend = c("Presymptomatic (P)", "Unascertained (A)", "Ascertained (I)"), fill = c("#0072B5FF", "#FFDC91FF", "#BC3C29FF"), bty = "n")
   text(par()$usr[1] - (par()$usr[2] -par()$usr[1]) * 0.12, par()$usr[4] + (par()$usr[4] - par()$usr[3]) * 0.06, labels = "F", xpd = T, cex = 2)
   ##figure_F finished
-  dev.off()
+  #dev.off()
+  }
 }
